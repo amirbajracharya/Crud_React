@@ -16,6 +16,13 @@ function App() {
       return;
     }
 
+    const phonePattern = /^9\d{9}$/;
+
+    if (!phonePattern.test(phone)) {
+      alert("Phone number must be 10 digits starting with 9");
+      return;
+    }
+
     const newContact = { name, phone, email };
 
     if (editIndex !== null) {

@@ -1,22 +1,26 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: SlateGray;
+  background-color: linear-gradient(to right, #e2e8f0, #cbd5e1);
   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .container {
   width: 750px;
-  margin: 60px auto;
-  background-color: gainsboro;
+  /* margin: 60px auto; */
+  background-color: #ffffff;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
 h1 {
   text-align: center;
-  color: black;
+  color: #1e293b;
+  margin-bottom: 30px;
 }
 
 .form {
@@ -25,24 +29,31 @@ h1 {
   margin-bottom: 25px;
 }
 input {
+  flex: 1;
   padding: 8px;
   border: 1px solid Gray;
-  border-radius: 4px;
-  text-align: center;
+  border-radius: 6px;
+  /* text-align: center; */
 }
 
 button {
   padding: 8px 14px;
-  background-color: DarkBlue;
+  background-color: #2563eb;
   color: White;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  text-align: center;
+  /* text-align: center; */
 }
+
+button:hover {
+  background-color: #1d4ed8;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  color: #1e293b;
 }
 
 th,
@@ -53,5 +64,6 @@ td {
 }
 
 th {
-  background-color: black;
+  background-color: #f1f5f9;
+  color: #1e293b;
 }
