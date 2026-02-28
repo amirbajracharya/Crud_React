@@ -2,14 +2,56 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: SlateGray;
-  /* display: flex; */
+  display: flex;
 }
 
 .container {
   width: 750px;
   margin: 60px auto;
-  background-color: navy;
+  background-color: gainsboro;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  text-align: center;
+  color: black;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+input {
+  padding: 8px;
+  border: 1px solid Gray;
+  border-radius: 4px;
+  text-align: center;
+}
+
+button {
+  padding: 8px 14px;
+  background-color: DarkBlue;
+  color: White;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid LightGray;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: black;
 }
