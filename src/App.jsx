@@ -6,7 +6,7 @@ function App() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,14 +22,20 @@ function App() {
       alert("Phone number must be 10 digits starting with 9");
       return;
     }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Enter valid email address");
+      return;
+    }
 
-    const newContact = { name, phone, email };
+    const newContact = { id: editId ? editId : Date.now(), name, phone, email };
 
-    if (editIndex !== null) {
+    if (editId !== null) {
       const updated = [...contacts];
-      updated[editIndex] = newContact;
+      const index = updated.findIndex((contact) => contact.id === editId);
+      updated[index] = newContact;
       setContacts(updated);
-      setEditIndex(null);
+      setEditId(null);
     } else {
       setContacts([...contacts, newContact]);
     }
@@ -77,7 +83,7 @@ function App() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
+        <button type="submit">{editId !== null ? "Update" : "Add"}</button>
       </form>
 
       <table>
@@ -91,14 +97,24 @@ function App() {
         </thead>
 
         <tbody>
-          {contacts.map((contact, index) => (
-            <tr key={index}>
+          {contacts.map((contact) => (
+            <tr key={contact.id}>
               <td>{contact.name}</td>
               <td>{contact.phone}</td>
               <td>{contact.email}</td>
-              <td>
-                <button onClick={() => handleEdit(index)}>Edit</button>
-                <button onClick={() => handleDelete(index)}>Delete</button>
+              <td className="actions">
+                <button
+                  className="edit-btn"
+                  onClick={() => handleEdit(contact)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(contact.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
