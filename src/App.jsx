@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -7,54 +7,73 @@ function App() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [editId, setEditId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const saved = localStorage.getItem("contacts");
+    if (saved) {
+      setContacts(JSON.parse(saved));
+    }
+  }, []);
 
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  const validate = () => {
     if (!name || !phone || !email) {
-      alert("All fields are required");
-      return;
+      alert("All fields required");
+      return false;
     }
 
     const phonePattern = /^9\d{9}$/;
-
     if (!phonePattern.test(phone)) {
-      alert("Phone number must be 10 digits starting with 9");
-      return;
+      alert("Phone must start with 9 and be 10 digits");
+      return false;
     }
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      alert("Enter valid email address");
-      return;
+      alert("Invalid email");
+      return false;
     }
+
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
 
     const newContact = { id: editId ? editId : Date.now(), name, phone, email };
 
-    if (editId !== null) {
-      const updated = [...contacts];
-      const index = updated.findIndex((contact) => contact.id === editId);
-      updated[index] = newContact;
-      setContacts(updated);
-      setEditId(null);
+    if (editId) {
+      setContacts(contacts.map((c) => (c.id === editId ? newContact : c)));
     } else {
       setContacts([...contacts, newContact]);
     }
 
+    resetForm();
+  };
+
+  const handleEdit = (contact) => {
+    setName(contact.name);
+    setPhone(contact.phone);
+    setEmail(contact.email);
+    setEditId(contact.id);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = (id) => {
+    setContacts(contacts.filter((c) => c.id !== id));
+  };
+  const resetForm = () => {
     setName("");
     setPhone("");
     setEmail("");
-  };
-
-  const handleEdit = (index) => {
-    setName(contacts[index].name);
-    setPhone(contacts[index].phone);
-    setEmail(contacts[index].email);
-    setEditIndex(index);
-  };
-
-  const handleDelete = (index) => {
-    const filtered = contacts.filter((_, i) => i !== index);
-    setContacts(filtered);
+    setEditId(null);
+    setIsModalOpen(false);
   };
 
   return (
